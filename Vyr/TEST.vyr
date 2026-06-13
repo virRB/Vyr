@@ -1,0 +1,7 @@
+@Welcome to Vyr!
+
+func TheThing() {
+    prnt("Hello World!")
+}
+
+TheThing()
