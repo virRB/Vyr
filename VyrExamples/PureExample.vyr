@@ -1,0 +1,52 @@
+@Simple Vyr example
+
+prnt("Hello World!")
+@Prints text into terminal
+
+var ans = None
+@Creates a variable
+
+func say(what) {
+    prnt(what)
+}
+@Function with parameters
+
+
+func TheThing() {
+    public ans
+    @Putting the variable ans into this functions scope
+    prnt("----------")
+    var a = input("Number 1...")
+    @Asks for user input and stores it
+    prnt("Alright...")
+    var b = input("Number 2...")
+    prnt("Almost there...")
+    a = int(a)
+    b = int(b)
+    @Converting the strings into numbers
+    var op = input("Choose an operation (+, -, *, /)")
+    if op == "+" {
+        ans = (a + b)
+    }
+    @Simple if statement
+    if op == "-" {
+        ans = (a - b)
+    }
+    if op == "*" {
+        ans = (a * b)
+    }
+    if op == "/" {
+        ans = (a / b)
+    }
+    ans = str(ans)
+    @Converting the numbers back into strings
+    prnt("The answer is " + ans)
+    @Prints the answer
+}
+@Function
+
+TheThing()
+@calls the function
+
+say("Hello!")
+@Calls a function with a parameter
