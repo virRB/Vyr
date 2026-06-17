@@ -1,0 +1,52 @@
+addInScript -> {
+    rand
+}
+
+alias.pull -> rand -> pick
+
+var name = input("Enter your name: ")
+var rounds = int(input("How many rounds?: "))
+
+func greet() {
+    public name
+    prnt("Welcome " + name)
+}
+
+func play_round(n) {
+    var score = pick(1, 100)
+
+    if score > 80 {
+        prnt("Round " + str(n) + ": CRITICAL HIT " + str(score))
+    }
+
+    if not (score > 80) {
+        prnt("Round " + str(n) + ": normal score " + str(score))
+    }
+
+    return (score)
+}
+
+greet()
+
+var total = 0
+var i = 0
+
+func game_loop() {
+    public total
+    public i
+    public rounds
+
+    if i == rounds {
+        prnt("Game finished! Total score: " + str(total))
+        return (0)
+    }
+
+    var result = play_round(i)
+
+    total = (total + result)
+    i = (i + 1)
+
+    game_loop()
+}
+
+game_loop()

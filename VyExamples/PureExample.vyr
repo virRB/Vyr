@@ -1,0 +1,50 @@
+var name = input("Enter your name: ")
+var n = int(input("Enter a number: "))
+
+func greet() {
+    public name
+    prnt("Hello " + name)
+}
+
+func calculate(x) {
+    var doubled = (x * 2)
+
+    if doubled > 10 {
+        prnt("Big number detected")
+    }
+
+    if not (doubled > 10) {
+        prnt("Small number detected")
+    }
+
+    return (doubled + 5)
+}
+
+greet()
+
+var result = calculate(n)
+prnt("Result: " + str(result))
+
+var arr = [1, 2, 3, 4]
+
+for item -> arr {
+    prnt("Squared: " + str(item * item))
+}
+
+var i = 0
+
+func recursive_counter() {
+    public i
+
+    if i == 5 {
+        prnt("Done counting")
+        return (0)
+    }
+
+    prnt("Count: " + str(i))
+    i = (i + 1)
+
+    recursive_counter()
+}
+
+recursive_counter()
