@@ -8,7 +8,7 @@ in_if = False
 in_func = False
 nest = 0
 modules = []
-headers = ["def", "if", "class"]
+headers = ["def", "if", "class", "for"]
 vars = []
 funcs = []
 
@@ -56,14 +56,17 @@ def parse(line, ver):
             output = f"{new[0]}.{new[1]}"
             call = True
 
+
+
     for var in vars:
         if line.startswith(var):
             output = line
 
-    if ver == "recurse":
-        pass
-
-    if line == "}":
+    if line.startswith("return"):
+        output = line
+    if ver == "recurse" and not (line.endswith(")")):
+        output = line
+    elif line == "}":
         if in_ais:
             in_ais = False
             output = ""
@@ -78,6 +81,24 @@ def parse(line, ver):
         output = f"import modules.{fin} as {fin}"
         if fin not in modules:
             modules.append(fin)
+
+    elif line.startswith("alias"):
+        if ".pull" in line:
+            line = line.split(" -> ")
+            if line[0] == "alias.pull":
+                output = f"from modules.{line[1]} import {line[2]}"
+        elif ".alias" in line:
+            line = line.split(" -> ")
+            if line[0] == "alias.alias":
+                output = f"import modules.{line[1]} as {line[2]}"
+
+    elif line.startswith("for") and line.endswith("{"):
+        line = line.replace("for ", "")
+        line = line.replace(" {", "")
+        line = line.split(" -> ")
+        output = f"for {line[0]} in {line[1]}:"
+        nest += 1
+
 
     elif line.startswith("addInScript"):
         if " -> " in line:
