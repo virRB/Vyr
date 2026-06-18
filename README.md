@@ -174,23 +174,30 @@ for thing -> things {
 @loops through every item in the array "things", aliases it as "thing"
 @and lets you use it in the loop body
 ```
-- "Regular" loops. VyScript does not have traditional update or while loops yet.
-- But they can be faked via recursion (a function calling itself):
-```VyScript
-func loop() {
-    prnt("Hello")
-    loop()
-}
-@THIS IS ONLY A DEMO. INFINITE RECURSION MAY CAUSE CRASHES OR LAG.
-@start the loop
-loop()
-```
-- Or even better, to loop a controlled amount of times and avoid lag:
+- Or you can loop a certain amount of times using a range
 ```VyScript
 for i -> range(10) {
     prnt("Hi")
 }
 @repeats a controlled amount of times
+```
+- while most programming languages use `while` loops, VyScript has `aslongas`
+- `aslongas` functions the same as `while`
+```VyScript
+aslongas True -> {
+    prnt("Hi!")
+}
+```
+- Though that has no end. a safer way to use `aslongas` would be:
+```VyScript
+var RUNNING = True
+
+aslongas RUNNING -> {
+    var inp = input("Command?")
+    if inp == "exit" {
+        RUNNING = False
+    }
+}
 ```
 ## Modules
 - Modules are there to make life easier. They add extra features to VyScript and let you do more without writing everything from scratch.
