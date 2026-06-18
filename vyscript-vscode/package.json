@@ -1,0 +1,28 @@
+{
+  "name": "vyscript-support",
+  "displayName": "VyScript",
+  "description": "Syntax highlighting for VyScript",
+  "version": "0.0.1",
+  "publisher": "vyscript",
+  "engines": {
+    "vscode": ">=1.70.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "vyscript",
+        "aliases": ["VyScript", "vyscript"],
+        "extensions": [".vyr"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "vyscript",
+        "scopeName": "source.vyscript",
+        "path": "./syntaxes/vyscript.tmLanguage.json"
+      }
+    ]
+  }
+}

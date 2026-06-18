@@ -1,0 +1,43 @@
+{
+  "name": "VyScript",
+  "scopeName": "source.vyscript",
+  "fileTypes": ["vy", "vyr"],
+
+  "patterns": [
+    {
+      "name": "comment.line.vyscript",
+      "match": "@.*$"
+    },
+
+    {
+      "name": "string.quoted.double.vyscript",
+      "begin": "\"",
+      "end": "\""
+    },
+
+    {
+      "name": "constant.numeric.vyscript",
+      "match": "\\b\\d+\\b"
+    },
+
+    {
+      "name": "keyword.operator.arrow.vyscript",
+      "match": "->"
+    },
+
+    {
+      "name": "keyword.declaration.var.vyscript",
+      "match": "\\bvar\\b"
+    },
+
+    {
+      "name": "keyword.control.vyscript",
+      "match": "\\b(func|if|for|return|aslongas|range)\\b"
+    },
+
+    {
+      "name": "support.function.vyscript",
+      "match": "\\b(addInScript|alias)\\b"
+    }
+  ]
+}
