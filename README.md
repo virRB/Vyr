@@ -161,14 +161,16 @@ if not b {
     prnt("B is false")
 }
 ```
-- VyScript does not support else statements yet, but may support them in future versions.
-- For now, long statements of conditionals must be formatted like:
+- Else, Else if:
+- VyScript doesnt have regular else/elif/else if, but he have otherwise (else) and othif (elif/else if)
+- Example:
 ```VyScript
-if a == 1 {
-    prnt("a is 1")
-}
-if a == 2 {
-    prnt("Nvm, a is 2")
+if a {
+    prnt("a")
+} othif  b {
+    prnt("b")
+} otherwise {
+    prnt("What?")
 }
 ```
 ## Loops
@@ -204,6 +206,15 @@ aslongas RUNNING -> {
     var inp = input("Command?")
     if inp == "exit" {
         RUNNING = False
+    }
+}
+```
+- To end a loop, for or aslongas, you can use "end"
+```VyScript
+aslongas True -> {
+    var a = input("Command: ")
+    if a == "exit" {
+        end
     }
 }
 ```
@@ -259,3 +270,36 @@ a = (a * 2)
 a = (a / 2)
 ```
 - The parentheses around the values are nessecary for evaluation
+- ">, <, !=, ==" work as excpected
+## Structs
+- To store more stuctured data, you use, as the name suggests, structs!
+- In VyScript, structs follow the following syntax:
+```VyScript
+dat <name> -> {
+    data: value,
+    data value
+}
+```
+- Example:
+```VyScript
+dat player -> {
+    Name: "virRB",
+    Age: 12
+}
+```
+- And to read data from it:
+```VyScript
+var name = data player.Name
+prnt(name)
+```
+- As for now, structs are read only, but I can try to make them mutable in future updates.
+## Error handling
+- unlike pythons "try/except", VyScript has "attempt/onfail"
+- Example:
+```VyScript
+attempt {
+    var x = int("Hello World")
+} onfail {
+    prnt("Yeah, cause thats illegal...")
+}
+```
