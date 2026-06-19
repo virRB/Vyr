@@ -6,11 +6,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 in_ais = False
 in_if = False
 in_func = False
+wpo = False
 nest = 0
 modules = []
-headers = ["def", "if", "class", "for", "while"]
+headers = ["def", "if", "class", "for", "while", "try"]
 vars = []
 funcs = []
+structs = []
+in_struct = False
 
 runtime = os.path.join(BASE_DIR, "runitme.py")
 test = os.path.join(BASE_DIR, "TEST.vyr")
@@ -45,7 +48,7 @@ def apply_indent(output, is_block_header=False):
 def parse(line, ver):
     line = line.strip()
     call = False
-    global in_ais, in_if, in_func, nest, modules, vars
+    global in_ais, in_if, in_func, nest, modules, vars, wpo, structs, headers, in_struct
 
     output = ""
 
@@ -55,8 +58,6 @@ def parse(line, ver):
             new = line.split(".use -> ")
             output = f"{new[0]}.{new[1]}"
             call = True
-
-
 
     for var in vars:
         if line.startswith(var):
@@ -69,17 +70,62 @@ def parse(line, ver):
 
     if line.startswith("return"):
         output = line
-    if ver == "recurse" and not (line.endswith(")")):
+
+    if wpo:
+        nest += 1
+        wpo = False
+
+    if ver == "recurse" and not (line.endswith(")")) and not (line.startswith("data")):
         output = line
+
     elif line == "}":
         if in_ais:
             in_ais = False
             output = ""
+        elif in_struct:
+            nest -= 1
+            in_struct = False
+            output = "}"
         elif nest > 0:
             nest -= 1
             output = ""
         else:
             output = ""
+    elif line == "} otherwise {":
+        output = "else:"
+        nest -= 1
+        wpo = True
+
+    elif line.startswith("data"):
+        line = line.replace("data ", "")
+        for struct in structs:
+            if line.startswith(struct):
+                line = line.split(".")
+                n = f'["{line[1]}"]'
+                output = f"{line[0]}{n}"
+
+    elif line.endswith("]"):
+        output = line
+
+    elif in_struct:
+        line = line.split(": ")
+        output = f'"{line[0]}": {line[1]}'
+
+    elif line.startswith("dat") and line.endswith("{"):
+        line = line.replace("dat ", "")
+        line = line.replace(" -> {", "")
+        output = line + " = {"
+        structs.append(line)
+        headers.append(line)
+        nest += 1
+        in_struct = True
+
+    elif line.startswith("} othif") and line.endswith("{"):
+        line = line.replace("} othif ", "")
+        line = line.replace(" {", "")
+        output = f"elif {line}:"
+        nest -= 1
+        wpo = True
 
     elif in_ais:
         fin = line.replace(",", "")
@@ -93,6 +139,21 @@ def parse(line, ver):
         condition = line
         output = f"while {condition}:"
         nest += 1
+
+    elif line.startswith("attempt"):
+        output = f"try:"
+        nest += 1
+
+    elif line == "end":
+        output = "break"
+
+    elif line == "skip":
+        output = "continue"
+
+    elif line == "} onfail {":
+        output = "except:"
+        nest -= 1
+        wpo = True
 
     elif line.startswith("alias"):
         if ".pull" in line:
