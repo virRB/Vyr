@@ -1,0 +1,7 @@
+@Welcome to VyScript v1.5
+
+func TheThing() {
+    prnt("Hello World!")
+}
+
+TheThing()
