@@ -7,14 +7,9 @@
 ## Dependencies
 - [Python](https://python.org)
 
-## Initial setup
-- Open your user folder. to do this you must open terminal and run
-```bash
-explorer .
-```
-- This should open your user directory. eg.(`C:\Users\<your name>`)
-- Then, in your user folder, add: `vy.bat`, the `Vyr` folder, and the `VyrBackend` folder
-- Then, open terminal again and do
+## Initail Setup
+- Run `installer.py` that is provided in 
+
 ```bash
 vy start
 ```
